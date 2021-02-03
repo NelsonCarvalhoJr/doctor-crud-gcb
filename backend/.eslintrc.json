@@ -29,7 +29,15 @@
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
     "no-console": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "prefix": ["I"],
+        "format": ["PascalCase"]
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

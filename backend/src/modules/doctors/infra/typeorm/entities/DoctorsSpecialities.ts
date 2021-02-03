@@ -14,7 +14,7 @@ import Doctor from './Doctor';
 @Entity('doctors_specialities')
 class DoctorsSpecialities {
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @ManyToOne(() => Doctor)
   @JoinColumn({ name: 'doctor_id' })
@@ -25,10 +25,10 @@ class DoctorsSpecialities {
   speciality: Speciality;
 
   @Column()
-  doctor_id: string;
+  doctor_id: number;
 
   @Column()
-  speciality_id: string;
+  speciality_id: number;
 
   @CreateDateColumn()
   created_at: Date;

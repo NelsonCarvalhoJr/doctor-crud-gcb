@@ -12,7 +12,7 @@ import DoctorsSpecialities from '@modules/doctors/infra/typeorm/entities/Doctors
 @Entity('specialities')
 class Speciality {
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @OneToMany(
     () => DoctorsSpecialities,
@@ -21,7 +21,7 @@ class Speciality {
       eager: true,
     },
   )
-  game_methods: DoctorsSpecialities[];
+  doctors_specialities: DoctorsSpecialities[];
 
   @Column()
   name: string;

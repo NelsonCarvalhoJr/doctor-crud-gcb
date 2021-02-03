@@ -12,7 +12,7 @@ import DoctorsSpecialities from './DoctorsSpecialities';
 @Entity('doctors')
 class Game {
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @OneToMany(
     () => DoctorsSpecialities,
@@ -22,7 +22,7 @@ class Game {
       cascade: ['insert'],
     },
   )
-  game_methods: DoctorsSpecialities[];
+  doctors_specialities: DoctorsSpecialities[];
 
   @Column()
   name: string;
