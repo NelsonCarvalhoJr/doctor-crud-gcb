@@ -47,7 +47,8 @@
     "react/jsx-one-expression-per-line": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "react/jsx-props-no-spreading": "off",
-    "@typescript-eslint/ban-types": "off"
+    "@typescript-eslint/ban-types": "off",
+    "camelcase": "off"
   },
   "settings": {
     "import/resolver": {
