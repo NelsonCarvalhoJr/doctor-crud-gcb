@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  HeaderContainer,
-  HeaderText,
-  HeaderLinkContainer,
-  HeaderLinkButton,
-} from './styles';
+import { HeaderContainer, HeaderText, HeaderLinkContainer } from './styles';
+
+import Button from '../Button';
 
 interface IHeaderProps {
   title: string;
@@ -18,10 +15,10 @@ const CreateDoctor: React.FC<IHeaderProps> = ({ title }) => (
 
     <HeaderLinkContainer>
       <Link to="/">
-        <HeaderLinkButton>Home</HeaderLinkButton>
+        <Button>Home</Button>
       </Link>
       <Link to="create">
-        <HeaderLinkButton>Cadastrar Médico</HeaderLinkButton>
+        <Button>Cadastrar Médico</Button>
       </Link>
     </HeaderLinkContainer>
   </HeaderContainer>
