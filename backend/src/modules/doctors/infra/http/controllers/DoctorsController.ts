@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import ListAllDoctorsService from '@modules/doctors/services/ListAllDoctorsService';
+import ShowDoctorService from '@modules/doctors/services/ShowDoctorService';
 import CreateDoctorService from '@modules/doctors/services/CreateDoctorService';
 import UpdateDoctorService from '@modules/doctors/services/UpdateDoctorService';
 import DeleteDoctorService from '@modules/doctors/services/DeleteDoctorService';
@@ -21,6 +22,18 @@ class DoctorsController {
     });
 
     return response.json(doctors);
+  }
+
+  async show(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const showDoctor = container.resolve(ShowDoctorService);
+
+    const doctor = await showDoctor.execute({
+      id: Number(id),
+    });
+
+    return response.json(doctor);
   }
 
   async create(request: Request, response: Response): Promise<Response> {

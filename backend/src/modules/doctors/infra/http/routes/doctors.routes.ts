@@ -10,6 +10,7 @@ const doctorsController = new DoctorsController();
 const doctorsSpecialitiesController = new DoctorsSpecialitiesController();
 
 doctorsRouter.get('/', doctorsController.all);
+doctorsRouter.get('/:id', doctorsController.show);
 doctorsRouter.post(
   '/',
   celebrate({
