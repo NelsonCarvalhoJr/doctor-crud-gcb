@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   isFocused: boolean;
-  isErrored: boolean;
+  isErrored?: boolean;
 }
 
 export const InputContainer = styled.div<ContainerProps>`
@@ -11,6 +11,7 @@ export const InputContainer = styled.div<ContainerProps>`
   padding: 16px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   border: 1px solid #333;
   color: #333;
@@ -27,7 +28,8 @@ export const InputContainer = styled.div<ContainerProps>`
     css`
       border: 2px solid #3333c3;
     `}
-  input {
+  select {
+    width: 100%;
     flex: 1;
     background: transparent;
     border: 0;
@@ -35,7 +37,6 @@ export const InputContainer = styled.div<ContainerProps>`
     &::placeholder {
       color: #666360;
     }
-  }
 `;
 
 export const Error = styled.span`

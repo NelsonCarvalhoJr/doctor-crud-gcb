@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const HomeContainer = styled.div`
   width: 100%;
+  padding: 20px 10px;
   background-color: #e8e8e8;
   display: flex;
   flex-direction: column;
@@ -9,7 +10,6 @@ export const HomeContainer = styled.div`
 `;
 
 export const HomeTitle = styled.h2`
-  padding: 20px 0 0;
   size: 24px;
   color: #333;
 `;

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   isFocused: boolean;
-  isErrored: boolean;
+  isErrored?: boolean;
 }
 
 export const InputContainer = styled.div<ContainerProps>`
@@ -11,6 +11,7 @@ export const InputContainer = styled.div<ContainerProps>`
   padding: 16px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   border: 1px solid #333;
   color: #333;

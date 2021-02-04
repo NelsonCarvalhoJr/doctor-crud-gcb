@@ -22,3 +22,8 @@ export const HeaderLinkContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+export const HeaderLinkContent = styled.div`
+  width: 180px;
+  padding: 0 5px;
+`;

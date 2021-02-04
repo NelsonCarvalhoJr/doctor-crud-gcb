@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { HeaderContainer, HeaderText, HeaderLinkContainer } from './styles';
+import {
+  HeaderContainer,
+  HeaderText,
+  HeaderLinkContainer,
+  HeaderLinkContent,
+} from './styles';
 
 import Button from '../Button';
 
@@ -14,12 +19,16 @@ const CreateDoctor: React.FC<IHeaderProps> = ({ title }) => (
     <HeaderText>{title}</HeaderText>
 
     <HeaderLinkContainer>
-      <Link to="/">
-        <Button>Home</Button>
-      </Link>
-      <Link to="create">
-        <Button>Cadastrar Médico</Button>
-      </Link>
+      <HeaderLinkContent>
+        <Link to="/">
+          <Button>Home</Button>
+        </Link>
+      </HeaderLinkContent>
+      <HeaderLinkContent>
+        <Link to="/create">
+          <Button>Cadastrar Médico</Button>
+        </Link>
+      </HeaderLinkContent>
     </HeaderLinkContainer>
   </HeaderContainer>
 );
