@@ -1,5 +1,7 @@
 import React from 'react';
 
-const UpdateDoctor: React.FC = () => <h1>UpdateDoctor</h1>;
+import Header from '../componets/Header';
+
+const UpdateDoctor: React.FC = () => <Header title="Atualizar Médico" />;
 
 export default UpdateDoctor;
