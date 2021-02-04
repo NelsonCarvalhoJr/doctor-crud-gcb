@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Header from '../componets/Header';
+import Header from '../components/Header';
 
 const CreateDoctor: React.FC = () => <Header title="Home" />;
 

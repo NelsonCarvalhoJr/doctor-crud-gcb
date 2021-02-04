@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Header from '../componets/Header';
+import Header from '../components/Header';
 
 import {
   HomeContainer,
@@ -27,6 +27,7 @@ const Home: React.FC = () => (
             <th>Telefone</th>
             <th>Celular</th>
             <th>CEP</th>
+            <th>Especialidades</th>
             <th>Ações</th>
           </tr>
         </DoctorsTableHead>
@@ -39,6 +40,7 @@ const Home: React.FC = () => (
             <td>(12) 3456-7890</td>
             <td>(12) 93456-7890</td>
             <td>12345-678</td>
+            <td>Especialidade 1, Especialidade 2</td>
             <td>
               <Link to="update/1">Editar</Link> | <a href="">Excluir</a>
             </td>
@@ -50,6 +52,7 @@ const Home: React.FC = () => (
             <td>(12) 3456-7890</td>
             <td>(12) 93456-7890</td>
             <td>12345-678</td>
+            <td>Especialidade 1, Especialidade 2</td>
             <td>
               <Link to="update/2">Editar</Link> | <a href="">Excluir</a>
             </td>
@@ -61,6 +64,7 @@ const Home: React.FC = () => (
             <td>(12) 3456-7890</td>
             <td>(12) 93456-7890</td>
             <td>12345-678</td>
+            <td>Especialidade 1, Especialidade 2</td>
             <td>
               <Link to="update/3">Editar</Link> | <a href="">Excluir</a>
             </td>
@@ -70,7 +74,7 @@ const Home: React.FC = () => (
         <DoctorsTableFoot>
           <tr>
             <td>Total</td>
-            <td colSpan={6}>3</td>
+            <td colSpan={7}>3</td>
           </tr>
         </DoctorsTableFoot>
       </DoctorsTable>
