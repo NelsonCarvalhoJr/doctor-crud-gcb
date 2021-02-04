@@ -35,16 +35,42 @@ class DoctorsRepository implements IDoctorsRepository {
     return filteredDoctors;
   }
 
+  public async findById(id: number): Promise<Doctor | undefined> {
+    const findDoctor = this.doctors.find(doctor => doctor.id === id);
+
+    return findDoctor;
+  }
+
   public async create(doctorData: ICreateDoctorDTO): Promise<Doctor> {
     const doctor = new Doctor();
+
+    const {
+      name,
+      crm,
+      telephone,
+      cell_phone,
+      postcode,
+      doctors_specialities,
+    } = doctorData;
 
     const count = this.doctors.length;
 
     const id = count ? this.doctors[count - 1].id + 1 : 1;
 
-    Object.assign(doctor, doctorData, { id });
+    Object.assign(doctor, { id, name, crm, telephone, cell_phone, postcode });
 
     doctor.doctors_specialities = [];
+
+    doctors_specialities.forEach(doctor_speciality => {
+      const doctorsSpecialities = new DoctorsSpecialities();
+
+      Object.assign(doctorsSpecialities, {
+        doctor_id: doctor.id,
+        speciality_id: doctor_speciality.speciality_id,
+      });
+
+      doctor.doctors_specialities.push(doctorsSpecialities);
+    });
 
     this.doctors.push(doctor);
 

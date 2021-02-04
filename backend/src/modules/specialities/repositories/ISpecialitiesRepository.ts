@@ -4,8 +4,8 @@ import ICreateSpecialityDTO from '../dtos/ICreateSpecialityDTO';
 
 interface ISpecialitiesRepository {
   all(): Promise<Speciality[]>;
-  create(data: ICreateSpecialityDTO): Promise<Speciality>;
-  delete(id: number): Promise<void>;
+  findByIds(ids: number[]): Promise<Speciality[]>;
+  create(specialityData: ICreateSpecialityDTO): Promise<Speciality>;
 }
 
 export default ISpecialitiesRepository;

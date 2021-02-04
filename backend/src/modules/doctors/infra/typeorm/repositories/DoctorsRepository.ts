@@ -47,6 +47,12 @@ class DoctorsRepository implements IDoctorsRepository {
     return doctors;
   }
 
+  public async findById(id: number): Promise<Doctor | undefined> {
+    const doctor = await this.ormRepository.findOne(id);
+
+    return doctor;
+  }
+
   public async create(doctorData: ICreateDoctorDTO): Promise<Doctor> {
     const doctor = this.ormRepository.create(doctorData);
 

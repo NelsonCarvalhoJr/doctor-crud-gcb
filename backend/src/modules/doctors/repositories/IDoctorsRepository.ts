@@ -5,6 +5,7 @@ import ICreateDoctorDTO from '../dtos/ICreateDoctorDTO';
 
 interface IDoctorsRepository {
   all(data: IFindAllDoctorsDTO): Promise<Doctor[]>;
+  findById(id: number): Promise<Doctor | undefined>;
   create(data: ICreateDoctorDTO): Promise<Doctor>;
   update(doctor: Doctor): Promise<Doctor>;
   delete(id: number): Promise<void>;
