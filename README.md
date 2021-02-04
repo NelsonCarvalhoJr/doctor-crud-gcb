@@ -16,7 +16,7 @@ Sistema para teste da empresa GCB Investimentos contendo um CRUD de médicos.
 ## Recursos
 
 - Api padrão REST
-- Validação com Yup
+- Validação com Yup e Celebrate
 - Funções especializadas (apenas uma operação)
 - Uso do Insomnia
 - Uso de Docker
