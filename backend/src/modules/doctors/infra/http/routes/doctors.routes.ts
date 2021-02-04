@@ -27,9 +27,6 @@ doctorsRouter.post(
 doctorsRouter.put(
   '/:id',
   celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    },
     [Segments.BODY]: {
       name: Joi.string().max(120).required(),
       crm: Joi.number().min(1000000).max(9999999).required(),
@@ -45,11 +42,8 @@ doctorsRouter.delete('/:id', doctorsController.delete);
 doctorsRouter.post(
   '/:id/add',
   celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    },
     [Segments.BODY]: {
-      speciality_ids: Joi.array().items(Joi.number()).required(),
+      speciality_ids: Joi.array().items(Joi.number()).min(1).required(),
     },
   }),
   doctorsSpecialitiesController.create,
@@ -57,11 +51,8 @@ doctorsRouter.post(
 doctorsRouter.delete(
   '/:id/remove',
   celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    },
     [Segments.BODY]: {
-      speciality_ids: Joi.array().items(Joi.number()).required(),
+      speciality_ids: Joi.array().items(Joi.number()).min(1).required(),
     },
   }),
   doctorsSpecialitiesController.delete,
