@@ -32,6 +32,7 @@ export const DoctorsTableBody = styled.tbody`
   text-align: center;
   td {
     padding: 0 15px;
+    border: 1px solid #333;
   }
 `;
 

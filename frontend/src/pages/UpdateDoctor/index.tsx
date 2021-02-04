@@ -1,4 +1,5 @@
 import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import * as Yup from 'yup';
@@ -19,6 +20,19 @@ interface ISpeciality {
   name: string;
 }
 
+interface IDoctor {
+  name: string;
+  crm: number;
+  telephone: string;
+  cell_phone: string;
+  postcode: string;
+  doctors_specialities: Array<{
+    speciality: {
+      id: number;
+    };
+  }>;
+}
+
 interface IAddressData {
   logradouro: string;
   bairro: string;
@@ -28,7 +42,7 @@ interface IAddressData {
 
 interface ISpecialitiesOptions {
   label: string;
-  value: number;
+  value: string;
 }
 
 interface IErrorsFormat {
@@ -41,6 +55,8 @@ interface IErrorsFormat {
 }
 
 const UpdateDoctor: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+
   const [formData, setFormData] = useState({
     name: '',
     crm: '',
@@ -49,6 +65,8 @@ const UpdateDoctor: React.FC = () => {
     postcode: '',
     specialities: [] as string[],
   });
+
+  const [currentSpecialities, setCurrentSpecialities] = useState<string[]>([]);
 
   const [errorsInFormData, setErrorsInFormData] = useState({
     name: '',
@@ -70,16 +88,45 @@ const UpdateDoctor: React.FC = () => {
     ISpecialitiesOptions[]
   >();
 
+  const history = useHistory();
+
   useEffect(() => {
     api.get<ISpeciality[]>('/specialities').then(response => {
       const formattedSpecialities = response.data.map(speciality => ({
         label: speciality.name,
-        value: speciality.id,
+        value: (speciality.id as unknown) as string,
       }));
 
       setSpecialitiesOptions(formattedSpecialities);
     });
   }, []);
+
+  useEffect(() => {
+    api.get<IDoctor>(`/doctors/${id}`).then(response => {
+      const doctorData = response.data;
+
+      if (doctorData) {
+        setFormData({
+          name: doctorData.name,
+          crm: (doctorData.crm as unknown) as string,
+          telephone: doctorData.telephone,
+          cell_phone: doctorData.cell_phone,
+          postcode: doctorData.postcode,
+          specialities: doctorData.doctors_specialities.map(
+            doctorSpeciality =>
+              (doctorSpeciality.speciality.id as unknown) as string,
+          ),
+        });
+
+        setCurrentSpecialities(
+          doctorData.doctors_specialities.map(
+            doctorSpeciality =>
+              (doctorSpeciality.speciality.id as unknown) as string,
+          ),
+        );
+      }
+    });
+  }, [id]);
 
   useEffect(() => {
     setAddressData({
@@ -131,7 +178,7 @@ const UpdateDoctor: React.FC = () => {
       });
     } else {
       const newSpecialities = formData.specialities
-        .filter(specialityValue => specialityValue !== value)
+        .filter(specialityValue => Number(specialityValue) !== Number(value))
         .map(specialityValue => specialityValue as string);
 
       setFormData({
@@ -170,11 +217,56 @@ const UpdateDoctor: React.FC = () => {
       await schema.validate(formData, {
         abortEarly: false,
       });
+
+      const updateData = {
+        name: formData.name,
+        crm: formData.crm,
+        telephone: formData.telephone,
+        cell_phone: formData.cell_phone,
+        postcode: formData.postcode,
+      };
+
+      await api.put(`/doctors/${id}`, {
+        ...updateData,
+        crm: isNaN(Number(updateData.crm))
+          ? Number(updateData.crm.split('.').join(''))
+          : updateData.crm,
+      });
+
+      const removedSpeciality = currentSpecialities.filter(
+        speciality =>
+          formData.specialities.findIndex(
+            findSpeciality => findSpeciality === speciality,
+          ) < 0,
+      );
+
+      const addedSpeciality = formData.specialities.filter(
+        speciality =>
+          currentSpecialities.findIndex(
+            findSpeciality => findSpeciality === speciality,
+          ) < 0,
+      );
+
+      if (addedSpeciality.length) {
+        await api.put(`/doctors/${id}/add`, {
+          speciality_ids: addedSpeciality,
+        });
+      }
+
+      if (removedSpeciality.length) {
+        await api.put(`/doctors/${id}/remove`, {
+          speciality_ids: removedSpeciality,
+        });
+      }
+
+      history.replace('/', null);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err) as IErrorsFormat;
 
         setErrorsInFormData({ ...errorsInFormData, ...errors });
+      } else {
+        alert(err.message);
       }
     }
   }
@@ -184,7 +276,7 @@ const UpdateDoctor: React.FC = () => {
       <Header title="Editar Médico" />
 
       <UpdateDoctorContainer>
-        <UpdateDoctorTitle>Cadastrar um médico</UpdateDoctorTitle>
+        <UpdateDoctorTitle>Editar um médico</UpdateDoctorTitle>
 
         <form onSubmit={handleSubmit}>
           <Input
@@ -272,7 +364,7 @@ const UpdateDoctor: React.FC = () => {
             name="specialities"
             options={
               specialitiesOptions || [
-                { label: 'Nenhuma especialidade encontrada', value: -1 },
+                { label: 'Nenhuma especialidade encontrada', value: '-1' },
               ]
             }
             value={formData.specialities}
@@ -280,7 +372,7 @@ const UpdateDoctor: React.FC = () => {
             error={errorsInFormData.specialities}
           />
 
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit">Editar</Button>
         </form>
       </UpdateDoctorContainer>
     </>

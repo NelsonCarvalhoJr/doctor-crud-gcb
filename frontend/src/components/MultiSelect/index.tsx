@@ -7,7 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLSelectElement> {
   error?: string;
   options: Array<{
     label: string;
-    value: number;
+    value: string;
   }>;
   containerStyle?: object;
 }

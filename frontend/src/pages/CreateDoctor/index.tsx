@@ -1,4 +1,5 @@
 import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import * as Yup from 'yup';
@@ -28,7 +29,7 @@ interface IAddressData {
 
 interface ISpecialitiesOptions {
   label: string;
-  value: number;
+  value: string;
 }
 
 interface IErrorsFormat {
@@ -70,11 +71,13 @@ const CreateDoctor: React.FC = () => {
     ISpecialitiesOptions[]
   >();
 
+  const history = useHistory();
+
   useEffect(() => {
     api.get<ISpeciality[]>('/specialities').then(response => {
       const formattedSpecialities = response.data.map(speciality => ({
         label: speciality.name,
-        value: speciality.id,
+        value: (speciality.id as unknown) as string,
       }));
 
       setSpecialitiesOptions(formattedSpecialities);
@@ -170,11 +173,20 @@ const CreateDoctor: React.FC = () => {
       await schema.validate(formData, {
         abortEarly: false,
       });
+
+      await api.post('/doctors', {
+        ...formData,
+        crm: Number(formData.crm.split('.').join('')),
+      });
+
+      history.push('/');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err) as IErrorsFormat;
 
         setErrorsInFormData({ ...errorsInFormData, ...errors });
+      } else {
+        alert(err.message);
       }
     }
   }
@@ -272,7 +284,7 @@ const CreateDoctor: React.FC = () => {
             name="specialities"
             options={
               specialitiesOptions || [
-                { label: 'Nenhuma especialidade encontrada', value: -1 },
+                { label: 'Nenhuma especialidade encontrada', value: '-1' },
               ]
             }
             value={formData.specialities}

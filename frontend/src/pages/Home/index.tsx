@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
+
+import api from '../../services/api';
 
 import {
   HomeContainer,
@@ -12,74 +14,97 @@ import {
   DoctorsTableFoot,
 } from './styles';
 
-const Home: React.FC = () => (
-  <>
-    <Header title="Home" />
-    <HomeContainer>
-      <HomeTitle>Listagem de Médicos</HomeTitle>
+interface IDoctor {
+  id: number;
+  name: string;
+  crm: number;
+  telephone: string;
+  cell_phone: string;
+  postcode: string;
+  doctors_specialities: Array<{
+    speciality: {
+      name: string;
+    };
+  }>;
+}
 
-      <DoctorsTable>
-        <DoctorsTableHead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>CRM</th>
-            <th>Telefone</th>
-            <th>Celular</th>
-            <th>CEP</th>
-            <th>Especialidades</th>
-            <th>Ações</th>
-          </tr>
-        </DoctorsTableHead>
+const Home: React.FC = () => {
+  const [doctors, setDoctors] = useState<IDoctor[]>([] as IDoctor[]);
 
-        <DoctorsTableBody>
-          <tr>
-            <td>1</td>
-            <td>John Doe</td>
-            <td>12.345.67</td>
-            <td>(12) 3456-7890</td>
-            <td>(12) 93456-7890</td>
-            <td>12345-678</td>
-            <td>Especialidade 1, Especialidade 2</td>
-            <td>
-              <Link to="update/1">Editar</Link> | <a href="">Excluir</a>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>John Doe</td>
-            <td>12.345.67</td>
-            <td>(12) 3456-7890</td>
-            <td>(12) 93456-7890</td>
-            <td>12345-678</td>
-            <td>Especialidade 1, Especialidade 2</td>
-            <td>
-              <Link to="update/2">Editar</Link> | <a href="">Excluir</a>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>John Doe</td>
-            <td>12.345.67</td>
-            <td>(12) 3456-7890</td>
-            <td>(12) 93456-7890</td>
-            <td>12345-678</td>
-            <td>Especialidade 1, Especialidade 2</td>
-            <td>
-              <Link to="update/3">Editar</Link> | <a href="">Excluir</a>
-            </td>
-          </tr>
-        </DoctorsTableBody>
+  useEffect(() => {
+    api.get<IDoctor[]>(`/doctors`).then(response => {
+      const doctorsData = response.data;
 
-        <DoctorsTableFoot>
-          <tr>
-            <td>Total</td>
-            <td colSpan={7}>3</td>
-          </tr>
-        </DoctorsTableFoot>
-      </DoctorsTable>
-    </HomeContainer>
-  </>
-);
+      if (doctorsData) {
+        setDoctors(doctorsData);
+      }
+    });
+  }, []);
+
+  async function handleDeleteDoctor(id: number): Promise<void> {
+    await api.delete(`/doctors/${id}`);
+
+    const updatedDoctors = doctors.filter(doctor => doctor.id === id);
+
+    setDoctors(updatedDoctors);
+  }
+
+  return (
+    <>
+      <Header title="Home" />
+      <HomeContainer>
+        <HomeTitle>Listagem de Médicos</HomeTitle>
+
+        <DoctorsTable>
+          <DoctorsTableHead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>CRM</th>
+              <th>Telefone</th>
+              <th>Celular</th>
+              <th>CEP</th>
+              <th>Especialidades</th>
+              <th>Ações</th>
+            </tr>
+          </DoctorsTableHead>
+
+          <DoctorsTableBody>
+            {doctors &&
+              doctors.map(doctor => (
+                <tr key={doctor.id}>
+                  <td>{doctor.id}</td>
+                  <td>{doctor.name}</td>
+                  <td>{doctor.crm}</td>
+                  <td>{doctor.telephone}</td>
+                  <td>{doctor.cell_phone}</td>
+                  <td>{doctor.postcode}</td>
+                  <td>
+                    {doctor.doctors_specialities.map(
+                      doctorSpeciality =>
+                        `${doctorSpeciality.speciality.name} | `,
+                    )}
+                  </td>
+                  <td>
+                    <Link to={`update/${doctor.id}`}>Editar</Link> |{' '}
+                    <a href="" onClick={() => handleDeleteDoctor(doctor.id)}>
+                      Excluir
+                    </a>
+                  </td>
+                </tr>
+              ))}
+          </DoctorsTableBody>
+
+          <DoctorsTableFoot>
+            <tr>
+              <td>Total</td>
+              <td colSpan={7}>{doctors ? doctors.length : 0}</td>
+            </tr>
+          </DoctorsTableFoot>
+        </DoctorsTable>
+      </HomeContainer>
+    </>
+  );
+};
 
 export default Home;
