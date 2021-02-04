@@ -1,5 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
+import { CelebrateError } from 'celebrate';
+import { ValidationError } from 'joi';
+
+import cors from 'cors';
 
 import '@shared/infra/typeorm';
 import '@shared/container';
@@ -10,6 +14,7 @@ import routes from './routes';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use(routes);
@@ -20,6 +25,19 @@ app.use(
       return response.status(err.statusCode).json({
         status: 'error',
         message: err.message,
+      });
+    }
+
+    if (err instanceof CelebrateError) {
+      const message = Array.from(err.details).map(
+        (error: [string, ValidationError]) => ({
+          [error[0]]: error[1].message,
+        }),
+      );
+
+      return response.status(400).json({
+        status: 'error',
+        message,
       });
     }
 

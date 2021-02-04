@@ -20,7 +20,9 @@ class DoctorsSpecialities {
   @JoinColumn({ name: 'doctor_id' })
   doctor: Doctor;
 
-  @ManyToOne(() => Speciality)
+  @ManyToOne(() => Speciality, {
+    eager: true,
+  })
   @JoinColumn({ name: 'speciality_id' })
   speciality: Speciality;
 
