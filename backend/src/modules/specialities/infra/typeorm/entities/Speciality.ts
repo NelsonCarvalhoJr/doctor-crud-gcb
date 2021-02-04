@@ -17,9 +17,6 @@ class Speciality {
   @OneToMany(
     () => DoctorsSpecialities,
     doctorsSpecialities => doctorsSpecialities.speciality,
-    {
-      eager: true,
-    },
   )
   doctors_specialities: DoctorsSpecialities[];
 

@@ -6,14 +6,14 @@ import RemoveSpecialitiesService from '@modules/doctors/services/RemoveSpecialit
 
 class DoctorsController {
   async create(request: Request, response: Response): Promise<Response> {
-    const { doctor_id } = request.params;
+    const { id } = request.params;
 
     const { speciality_ids } = request.body;
 
     const addSpecialities = container.resolve(AddSpecialitiesService);
 
     const doctor = await addSpecialities.execute({
-      doctor_id: Number(doctor_id),
+      doctor_id: Number(id),
       speciality_ids: speciality_ids as number[],
     });
 
@@ -21,14 +21,14 @@ class DoctorsController {
   }
 
   async delete(request: Request, response: Response): Promise<Response> {
-    const { doctor_id } = request.params;
+    const { id } = request.params;
 
     const { speciality_ids } = request.body;
 
     const removeSpecialities = container.resolve(RemoveSpecialitiesService);
 
     const doctor = await removeSpecialities.execute({
-      doctor_id: Number(doctor_id),
+      doctor_id: Number(id),
       speciality_ids: speciality_ids as number[],
     });
 

@@ -34,11 +34,26 @@ Sistema para teste da empresa GCB Investimentos contendo um CRUD de médicos.
 ## Configurações
 
 **Pasta *./backend***
-- criar um arquivo **ormconfig.json** com o conteúdo de **ormconfig.example.json**, preenchendo o campo de senha
+- criar um arquivo **ormconfig.json** com o conteúdo de **ormconfig.example.json**, preenchendo o campo   de senha
 - Instalar dependênciar, executar migrações e iniciar a aplicação conforme abaixo
 
 ```bash
 yarn
 yarn typeorm migration:run
 yarn dev:server
+```
+
+## Testes
+
+- Testes no backend através do comando abaixo
+
+```bash
+yarn test
+```
+## Build
+
+- Gerar build do backend através do comando abaixo
+
+```bash
+yarn build
 ```

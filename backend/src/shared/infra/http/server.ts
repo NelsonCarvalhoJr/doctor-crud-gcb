@@ -1,13 +1,18 @@
 import express, { Request, Response, NextFunction } from 'express';
+import 'express-async-errors';
 
 import '@shared/infra/typeorm';
 import '@shared/container';
 
 import AppError from '@shared/errors/AppError';
 
+import routes from './routes';
+
 const app = express();
 
 app.use(express.json());
+
+app.use(routes);
 
 app.use(
   async (err: Error, request: Request, response: Response, _: NextFunction) => {
