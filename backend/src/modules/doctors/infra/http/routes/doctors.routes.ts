@@ -40,7 +40,7 @@ doctorsRouter.put(
 );
 doctorsRouter.delete('/:id', doctorsController.delete);
 
-doctorsRouter.post(
+doctorsRouter.put(
   '/:id/add',
   celebrate({
     [Segments.BODY]: {
@@ -49,7 +49,7 @@ doctorsRouter.post(
   }),
   doctorsSpecialitiesController.create,
 );
-doctorsRouter.delete(
+doctorsRouter.put(
   '/:id/remove',
   celebrate({
     [Segments.BODY]: {
