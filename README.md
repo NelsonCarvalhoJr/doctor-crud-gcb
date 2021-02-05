@@ -60,7 +60,7 @@ yarn test
 ```
 ## Build
 
-- Gerar build do backend através do comando abaixo
+- Gerar build do backend e do frontend através do comando abaixo
 
 ```bash
 yarn build

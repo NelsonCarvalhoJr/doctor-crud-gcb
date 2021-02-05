@@ -37,6 +37,7 @@ export const InputContainer = styled.div<ContainerProps>`
     &::placeholder {
       color: #666360;
     }
+  }
 `;
 
 export const Error = styled.span`

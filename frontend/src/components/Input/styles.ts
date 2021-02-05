@@ -30,6 +30,7 @@ export const InputContainer = styled.div<ContainerProps>`
     `}
   input {
     flex: 1;
+    width: 100%;
     background: transparent;
     border: 0;
     color: #333;

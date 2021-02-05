@@ -14,3 +14,7 @@ export const UpdateDoctorTitle = styled.h2`
   padding-bottom: 20px;
   color: #333;
 `;
+
+export const Form = styled.form`
+  width: 550px;
+`;

@@ -26,22 +26,24 @@ const Input: React.FC<InputProps> = ({
   }, []);
 
   return (
-    <InputContainer
-      style={containerStyle}
-      isErrored={!!error}
-      isFocused={isFocused}
-      data-testid="input-container"
-    >
-      <InputMask
-        name={name}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        mask={mask || ''}
-        {...rest}
-      />
+    <>
+      <InputContainer
+        style={containerStyle}
+        isErrored={!!error}
+        isFocused={isFocused}
+        data-testid="input-container"
+      >
+        <InputMask
+          name={name}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          mask={mask || ''}
+          {...rest}
+        />
+      </InputContainer>
 
       {error && <Error>{error}</Error>}
-    </InputContainer>
+    </>
   );
 };
 

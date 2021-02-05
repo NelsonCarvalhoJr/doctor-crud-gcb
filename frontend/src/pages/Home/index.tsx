@@ -179,11 +179,12 @@ const Home: React.FC = () => {
                   <td>
                     {doctor.doctors_specialities.map(
                       doctorSpeciality =>
-                        `${doctorSpeciality.speciality.name} | `,
+                        `${doctorSpeciality.speciality.name}${'\n'}`,
                     )}
                   </td>
                   <td>
-                    <Link to={`update/${doctor.id}`}>Editar</Link> |{' '}
+                    <Link to={`update/${doctor.id}`}>Editar</Link>
+                    {'\n'}
                     <a href="" onClick={() => handleDeleteDoctor(doctor.id)}>
                       Excluir
                     </a>

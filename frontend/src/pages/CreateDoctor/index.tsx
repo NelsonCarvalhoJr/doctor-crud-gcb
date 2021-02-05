@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import * as Yup from 'yup';
 
-import { CreateDoctorContainer, CreateDoctorTitle } from './styles';
+import { CreateDoctorContainer, CreateDoctorTitle, Form } from './styles';
 
 import Header from '../../components/Header';
 import Input from '../../components/Input';
@@ -198,7 +198,7 @@ const CreateDoctor: React.FC = () => {
       <CreateDoctorContainer>
         <CreateDoctorTitle>Cadastrar um médico</CreateDoctorTitle>
 
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Input
             name="name"
             type="text"
@@ -293,7 +293,7 @@ const CreateDoctor: React.FC = () => {
           />
 
           <Button type="submit">Cadastrar</Button>
-        </form>
+        </Form>
       </CreateDoctorContainer>
     </>
   );

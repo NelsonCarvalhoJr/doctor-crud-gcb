@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import * as Yup from 'yup';
 
-import { UpdateDoctorContainer, UpdateDoctorTitle } from './styles';
+import { UpdateDoctorContainer, UpdateDoctorTitle, Form } from './styles';
 
 import Header from '../../components/Header';
 import Input from '../../components/Input';
@@ -236,14 +236,14 @@ const UpdateDoctor: React.FC = () => {
       const removedSpeciality = currentSpecialities.filter(
         speciality =>
           formData.specialities.findIndex(
-            findSpeciality => findSpeciality === speciality,
+            findSpeciality => Number(findSpeciality) === Number(speciality),
           ) < 0,
       );
 
       const addedSpeciality = formData.specialities.filter(
         speciality =>
           currentSpecialities.findIndex(
-            findSpeciality => findSpeciality === speciality,
+            findSpeciality => Number(findSpeciality) === Number(speciality),
           ) < 0,
       );
 
@@ -278,7 +278,7 @@ const UpdateDoctor: React.FC = () => {
       <UpdateDoctorContainer>
         <UpdateDoctorTitle>Editar um médico</UpdateDoctorTitle>
 
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Input
             name="name"
             type="text"
@@ -373,7 +373,7 @@ const UpdateDoctor: React.FC = () => {
           />
 
           <Button type="submit">Editar</Button>
-        </form>
+        </Form>
       </UpdateDoctorContainer>
     </>
   );

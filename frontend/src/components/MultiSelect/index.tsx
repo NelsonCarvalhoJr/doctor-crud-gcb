@@ -28,30 +28,32 @@ const MultiSelect: React.FC<InputProps> = ({
   }, []);
 
   return (
-    <InputContainer
-      style={containerStyle}
-      isErrored={!!error}
-      isFocused={isFocused}
-      data-testid="input-container"
-    >
-      <select
-        name={name}
-        multiple
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        {...rest}
+    <>
+      <InputContainer
+        style={containerStyle}
+        isErrored={!!error}
+        isFocused={isFocused}
+        data-testid="input-container"
       >
-        <option value={0}>Selecione...</option>
+        <select
+          name={name}
+          multiple
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          {...rest}
+        >
+          <option value={0}>Selecione...</option>
 
-        {options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+          {options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </InputContainer>
 
       {error && <Error>{error}</Error>}
-    </InputContainer>
+    </>
   );
 };
 
