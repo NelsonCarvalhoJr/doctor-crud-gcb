@@ -53,14 +53,14 @@ yarn start
 
 ## Testes
 
-- Testes no backend através do comando abaixo
+- Testes no backend através do comando abaixo (na sua pasta)
 
 ```bash
 yarn test
 ```
 ## Build
 
-- Gerar build do backend e do frontend através do comando abaixo
+- Gerar build do backend e do frontend através do comando abaixo (nas suas respectivas pastas)
 
 ```bash
 yarn build
